@@ -45,7 +45,6 @@ class AdaDelta(LearningRule):
         self.exp_deltsq_dtype = self.param_dtype
         self.scratch_space_dtype = self.param_dtype
         self.lrates_dtype = self.param_dtype
-        self.lrates_dtype = self.param_dtype
         self.exp_gradsq = []
         self.exp_deltsq = []
         self.lrates = []
