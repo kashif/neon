@@ -16,6 +16,7 @@
 from neon.optimizers.gradient_descent import (GradientDescent,  # noqa
                                               GradientDescentPretrain,
                                               GradientDescentMomentum,
-    GradientDescentMomentumWeightDecay)
+                                              GradientDescentMomentumWeightDecay)
 from neon.optimizers.adadelta import AdaDelta  # noqa
 from neon.optimizers.rmsprop import RMSProp  # noqa
+from neon.optimizers.adam import Adam #noqa

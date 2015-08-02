@@ -1154,6 +1154,20 @@ class GPU(Backend):
         # Final update to the params
         ps_item[:] = ps_item + ls_item
 
+    def adam_update(self, ps_item, us_item, ms_item, vs_item, ls_item, ss_item,
+                   beta_1, beta_2, epsilon, epoch):
+
+        ms_item[:] = ms_item * beta_1 + (1.0 - beta_1) * us_item
+
+        vs_item[:] = vs_item * beta_2 + (1.0 - beta_2) * us_item * us_item
+
+        t = epoch + 1
+
+        ls_item[:] = ls_item * self.ng.sqrt(1.0 - beta_2**t) / (1.0 - beta_1**t)
+
+        ps_item[:] = ps_item - ls_item * ms_item * \
+            self.ng.reciprocal((self.ng.sqrt(vs_item) + epsilon))
+
     def rms_update(self, params, updates, run_squares, velocity, scratch_space,
                    gamma, epsilon, learning_rate, momentum_coef):
 
