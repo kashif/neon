@@ -27,6 +27,7 @@ from neon.optimizers.gradient_descent import (GradientDescent,
                                               GradientDescentMomentum,
     GradientDescentMomentumWeightDecay)  # noqa
 from neon.optimizers.adadelta import AdaDelta
+from neon.optimizers.adam import Adam
 from neon.optimizers.rmsprop import RMSProp
 from neon.util.compat import range
 from neon.util.param import req_param, opt_param, ensure_dtype
@@ -653,6 +654,8 @@ class WeightLayer(Layer):
                 param_dtype=dtype, gradient_dtype=dtype)
         elif lrule_init['type'] == 'adadelta':
             lr = AdaDelta(name=lrname, lr_params=lrule_init['lr_params'])
+        elif lrule_init['type'] == 'adam':
+            lr = Adam(name=lrname, lr_params=lrule_init['lr_params'])
         elif lrule_init['type'] == 'rmsprop':
             lr = RMSProp(name=lrname, lr_params=lrule_init['lr_params'],
                          param_dtype=dtype, gradient_dtype=dtype)
