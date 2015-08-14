@@ -1677,8 +1677,8 @@ class CPU(Backend):
         """
         mavg._tensor[:] = rho * mavg._tensor + (1.0 - rho) * newval._tensor
 
-    def adam_update(self, ps_item, us_item, ms_item, vs_item, ls_item, ss_item,
-                   beta_1, beta_2, epsilon, epoch):
+    def adam_update(self, ps_item, us_item, ms_item, vs_item, ss_item,
+                   beta_1, beta_2, learning_rate_t, epsilon):
 
         self.multiply(ms_item, beta_1, out=ms_item)
         self.multiply(us_item, 1.0 - beta_1, out=ss_item)
@@ -1689,17 +1689,13 @@ class CPU(Backend):
         self.multiply(ss_item, 1.0 - beta_2, out=ss_item)
         self.add(vs_item, ss_item, out=vs_item)
 
-        t = epoch + 1
-
-        self.multiply(ls_item, math.sqrt(1.0 - beta_2**t)/(1.0 - beta_1**t),
-                out=ls_item)
-        self.multiply(ls_item, ms_item, out=ss_item)
+        self.multiply(ms_item,learning_rate_t, out=ss_item)
         self.sqrt(vs_item, out=vs_item)
         self.add(vs_item, epsilon, out=vs_item)
-        self.divide(ss_item, vs_item, out=ls_item)
-        self.multiply(ls_item, -1.0, out=ls_item)
+        self.divide(ss_item, vs_item, out=ss_item)
+        self.multiply(ss_item, -1.0, out=ss_item)
 
-        self.add(ps_item, ls_item, out=ps_item)
+        self.add(ps_item, ss_item, out=ps_item)
 
     def ada_update(self, ps_item, us_item, gs_item, ds_item, ls_item, ss_item,
                    rho, epsilon):
