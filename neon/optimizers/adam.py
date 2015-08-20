@@ -55,8 +55,8 @@ class Adam(LearningRule):
 
     def apply_rule(self, params, updates, epoch):
         t = epoch + 1
-        learning_rate_t = self.learning_rate * math.sqrt(1.0 - self.beta_2**t) /
-                                                        (1.0 - self.beta_1**t)
+        learning_rate_t = self.learning_rate * (math.sqrt(1.0 - self.beta_2**t) /
+                                                        (1.0 - self.beta_1**t))
 
         for ps_item, us_item, ms_item, vs_item, ss_item in zip(
                 params, updates, self.running_1st_mom,
