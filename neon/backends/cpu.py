@@ -1689,7 +1689,7 @@ class CPU(Backend):
         self.multiply(ss_item, 1.0 - beta_2, out=ss_item)
         self.add(vs_item, ss_item, out=vs_item)
 
-        self.multiply(ms_item,learning_rate_t, out=ss_item)
+        self.multiply(ms_item, learning_rate_t, out=ss_item)
         self.sqrt(vs_item, out=vs_item)
         self.add(vs_item, epsilon, out=vs_item)
         self.divide(ss_item, vs_item, out=ss_item)
